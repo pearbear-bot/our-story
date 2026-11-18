@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>致我的宝宝 · 我们的星光回忆长信</title>
+  <meta name="description" content="时间过得好快，转眼已经和你在一起了6个月">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ======================= 专属心动密码锁 (Password Lock Screen) ======================= -->
+  <div id="passwordLockOverlay" class="lock-overlay">
+    <div class="lock-card" id="lockCard">
+      <div class="lock-icon-wrap">
+        <span class="lock-icon" id="lockIcon">🔒</span>
+        <div class="lock-glow-ring"></div>
+      </div>
+      <h2 class="lock-title handwritten-text">✨ 开启专属星空之旅</h2>
+      <p class="lock-subtitle handwritten-text">输入属于我们的心动纪念密码 (4位数字)</p>
+
+      <div class="pin-input-container" id="pinInputContainer">
+        <input type="password" id="pinInput" class="pin-hidden-input" maxlength="4" inputmode="numeric" pattern="[0-9]*" autofocus autocomplete="off">
+        <div class="pin-dots" id="pinDots">
+          <span class="pin-dot" data-index="0"></span>
+          <span class="pin-dot" data-index="1"></span>
+          <span class="pin-dot" data-index="2"></span>
+          <span class="pin-dot" data-index="3"></span>
+        </div>
+      </div>
+
+      <div class="lock-feedback handwritten-text" id="lockFeedback">
+        💡 提示：我们在一起的那个重要日子 🌸
+      </div>
+
+      <button type="button" class="unlock-btn handwritten-text" id="unlockBtn">
+        <span>✨ 解锁甜蜜回忆</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- 动态全屏星空画布 -->
+  <canvas id="star-canvas"></canvas>
+
+  <!-- 顶部常驻置顶微型心动栏 (Sticky Top Bar) -->
+  <header class="sticky-nav">
+    <div class="sticky-nav-inner">
+      <!-- 迷你心动计时器 -->
+      <div class="mini-timer" title="我们相守的时光">
+        <span class="mini-heart">❤️</span>
+        <span class="mini-label">相守</span>
+        <div class="mini-time-display">
+          <span class="mini-num" id="days">0</span><span class="mini-unit">天</span>
+          <span class="mini-num" id="hours">00</span><span class="mini-unit">时</span>
+          <span class="mini-num" id="minutes">00</span><span class="mini-unit">分</span>
+          <span class="mini-num" id="seconds">00</span><span class="mini-unit">秒</span>
+        </div>
+      </div>
+
+      <!-- 音乐播放控制器整合到右侧 -->
+      <div class="music-player-btn" id="musicBtn" title="播放/暂停音乐">
+        <div class="music-disc" id="musicDisc">
+          <span class="music-icon">🎵</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 专属浪漫背景音乐：周杰伦-星晴 -->
+  <audio id="bgmAudio" loop preload="auto">
+    <source src="周杰伦-星晴.flac" type="audio/flac">
+    <source src="周杰伦-星晴.flac" type="audio/x-flac">
+  </audio>
+
+  <!-- 主容器 (手机最佳视口) -->
+  <main class="mobile-container">
+    
+    <!-- 信件书本外壳 -->
+    <div class="letter-book">
+      
+      <!-- 顶部信件信头装饰 -->
+      <div class="letter-header-decor">
+        <div class="stamp-box">
+          <span class="stamp-icon">🪐</span>
+          <span class="stamp-text">LOVE LETTER · 0521</span>
+        </div>
+        <div class="letter-page-counter" id="pageIndicatorText">Page 1 / 15</div>
+      </div>
+
+      <!-- 顶部轻微阅读进度条 -->
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
+      </div>
+
+      <!-- 信件主体页面容器 -->
+      <div class="letter-pages-viewport">
+
+        <!-- ======================= 第 1 页 ======================= -->
+        <article class="letter-page active" data-page="1">
+          <div class="letter-paper">
+            <h2 class="letter-salutation">亲爱的宝宝：</h2>
+            
+            <p class="letter-para handwritten-text highlight-para">
+              时间过得好快，转眼已经和你在一起了<strong>6个月</strong>！
+            </p>
+
+            <!-- 5月月历组件 -->
+            <div class="calendar-component">
+              <div class="cal-header">
+                <span class="cal-title">✦ MAY 2026 · 5月 ✦</span>
+                <span class="cal-sub">那一天，我们走向彼此</span>
+              </div>
+              <div class="cal-grid">
+                <span class="cal-weekday">日</span>
+                <span class="cal-weekday">一</span>
+                <span class="cal-weekday">二</span>
+                <span class="cal-weekday">三</span>
+                <span class="cal-weekday">四</span>
+                <span class="cal-weekday">五</span>
+                <span class="cal-weekday">六</span>
+
+                <!-- 2026年5月 -->
+                <span class="cal-empty"></span>
+                <span class="cal-empty"></span>
+                <span class="cal-empty"></span>
+                <span class="cal-empty"></span>
+                <span class="cal-empty"></span>
+                <span class="cal-day">1</span>
+                <span class="cal-day">2</span>
+
+                <span class="cal-day">3</span>
+                <span class="cal-day">4</span>
+                <span class="cal-day">5</span>
+                <span class="cal-day">6</span>
+                <span class="cal-day">7</span>
+                <span class="cal-day">8</span>
+                <span class="cal-day">9</span>
+
+                <span class="cal-day">10</span>
+                <span class="cal-day">11</span>
+                <span class="cal-day">12</span>
+                <span class="cal-day">13</span>
+                <span class="cal-day">14</span>
+                <span class="cal-day">15</span>
+                <span class="cal-day">16</span>
+
+                <span class="cal-day">17</span>
+                <span class="cal-day">18</span>
+                <span class="cal-day">19</span>
+                <span class="cal-day">20</span>
+                <!-- 5月21日 爱心圈出 -->
+                <span class="cal-day special-day pulse-heart" title="2026.05.21 我们在一起啦">
+                  <span class="day-num">21</span>
+                  <span class="day-heart">❤️</span>
+                  <span class="day-tag">在一起</span>
+                </span>
+                <span class="cal-day">22</span>
+                <span class="cal-day">23</span>
+
+                <span class="cal-day">24</span>
+                <span class="cal-day">25</span>
+                <span class="cal-day">26</span>
+                <span class="cal-day">27</span>
+                <span class="cal-day">28</span>
+                <span class="cal-day">29</span>
+                <span class="cal-day">30</span>
+
+                <span class="cal-day">31</span>
+              </div>
+            </div>
+
+            <div class="turn-page-hint" id="firstPageHint">
+              <span class="hint-hand">👉</span> 点击“下一页”，翻开属于我们的故事
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 2 页 ======================= -->
+        <article class="letter-page" data-page="2">
+          <div class="letter-paper">
+            <p class="letter-para handwritten-text highlight-para big-handwrite">
+              虽然只是短短6个月，但仿佛已经和你在一起很久很久了……
+            </p>
+
+            <!-- 温暖的双人卡通组件 1 (星空依偎情侣) -->
+            <div class="cartoon-illustration">
+              <svg viewBox="0 0 320 170" class="couple-svg" aria-label="浪漫情侣在月光与星辰下依偎">
+                <defs>
+                  <linearGradient id="moonGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffeaa7" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#fdcb6e" stop-opacity="0.2"/>
+                  </linearGradient>
+                  <linearGradient id="hillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#1e2749"/>
+                    <stop offset="100%" stop-color="#0f152d"/>
+                  </linearGradient>
+                </defs>
+                <circle cx="230" cy="65" r="42" fill="url(#moonGlow)" filter="drop-shadow(0 0 15px #ffeaa7)"/>
+                <circle cx="242" cy="55" r="38" fill="#080c1d"/>
+                <polygon points="70,35 73,42 80,43 75,48 77,55 70,51 63,55 65,48 60,43 67,42" fill="#ffeaa7" opacity="0.8"/>
+                <polygon points="130,25 132,30 137,31 133,35 134,40 130,37 126,40 127,35 123,31 128,30" fill="#ffffff" opacity="0.9"/>
+                <polygon points="180,45 181,48 185,49 182,52 183,56 180,54 177,56 178,52 175,49 179,48" fill="#ffeaa7" opacity="0.7"/>
+                <path d="M-20,170 Q100,120 210,132 T340,170 Z" fill="url(#hillGrad)"/>
+                <!-- 情侣依偎背影 -->
+                <circle cx="150" cy="115" r="11" fill="#2d3436"/>
+                <path d="M140,126 C140,123 144,122 150,122 C156,122 160,123 160,126 L163,160 L137,160 Z" fill="#3867d6"/>
+                <circle cx="166" cy="118" r="10" fill="#2d3436"/>
+                <path d="M166,113 Q174,119 173,133 Q169,137 165,133 Z" fill="#2d3436"/>
+                <path d="M158,128 C160,125 165,124 169,125 C173,126 176,128 175,132 L173,160 L155,160 Z" fill="#eb3b5a"/>
+                <path d="M158,105 C158,102 155,100 152,102 C149,104 152,109 158,113 C164,109 167,104 164,102 C161,100 158,102 158,105 Z" fill="#ff4757" class="heart-flutter"/>
+              </svg>
+              <span class="cartoon-caption handwritten-text">“和你在一起的每一天，都超级开心！”</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 3 页 ======================= -->
+        <article class="letter-page" data-page="3">
+          <div class="letter-paper text-focus-paper">
+            <p class="letter-para handwritten-text chapter-intro-quote">
+              这半年里，<br>
+              我们一起经历了好多好多......
+            </p>
+            <div class="galaxy-compass">
+              <span class="compass-star">✦</span>
+              <span class="compass-line"></span>
+              <span class="compass-text">MEMORIES</span>
+              <span class="compass-line"></span>
+              <span class="compass-star">✦</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 4 页：毕业 ======================= -->
+        <article class="letter-page" data-page="4">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">🎓 我们一起毕业……</h3>
+
+            <!-- 居中拍立得相框 -->
+            <div class="polaroid-wrapper">
+              <div class="polaroid-card-box rot-left-1">
+                <div class="washi-tape-strip tape-center pink-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/毕业.jpg" alt="我们一起毕业" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">嘿嘿，回想起来依旧觉得很幸福很浪漫 ✨</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 5 页：DIY情侣装 ======================= -->
+        <article class="letter-page" data-page="5">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">👕 一起 diy 情侣装……</h3>
+
+            <div class="polaroid-wrapper">
+              <div class="polaroid-card-box rot-right-1">
+                <div class="washi-tape-strip tape-center gold-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/情侣装.jpg" alt="一起diy情侣装" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text note-regret">
+                  当时居然没有一起拍张照，好遗憾吧！下次给我补上 😜
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 6 页：挑出租屋 (原照片自然比例) ======================= -->
+        <article class="letter-page" data-page="6">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">🔑 一起挑出租屋……</h3>
+
+            <div class="polaroid-wrapper natural-ratio-wrapper">
+              <div class="polaroid-card-box rot-left-1 natural-card">
+                <div class="washi-tape-strip tape-center purple-tape"></div>
+                <div class="photo-inner natural-photo-inner">
+                  <img src="images/出租屋.jpg" alt="一起挑出租屋" class="zoomable-img natural-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">属于宝宝的第一次租房经历 🏠</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 7 页：爬雪山 (雪山1下移错落) ======================= -->
+        <article class="letter-page" data-page="7">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">🏔️ 一起爬雪山……</h3>
+
+            <div class="photos-group-layout layout-3">
+              <!-- 雪山1 相框往下移一些 -->
+              <div class="polaroid-card-box mini-card card-drop-down rot-left-2">
+                <div class="washi-tape-strip tape-top-left blue-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/雪山1.jpg" alt="雪山1" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">帅气登顶 ❄️</div>
+              </div>
+
+              <!-- 雪山2 保持原位 -->
+              <div class="polaroid-card-box mini-card rot-right-2">
+                <div class="washi-tape-strip tape-top-right gold-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/雪山2.jpg" alt="雪山2" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">我的体力比你好！ 🏔️</div>
+              </div>
+
+              <!-- 雪山3 居中 -->
+              <div class="polaroid-card-box full-card rot-straight">
+                <div class="photo-inner">
+                  <img src="images/雪山3.jpg" alt="雪山3" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">传说中一起登雪山的恋人会一直在一起哦~ ❤️</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 8 页：去海边 (3张照片排版) ======================= -->
+        <article class="letter-page" data-page="8">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">🌊 一起去海边……</h3>
+
+            <!-- 3张海边照片：海边1、海边2带错落，海边3居中完整铺开 -->
+            <div class="photos-group-layout layout-3">
+              <div class="polaroid-card-box mini-card rot-left-2">
+                <div class="washi-tape-strip tape-top-left blue-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/海边1.jpg" alt="海边1" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">男人至死是少年 🌊</div>
+              </div>
+
+              <div class="polaroid-card-box mini-card card-drop-down rot-right-2">
+                <div class="washi-tape-strip tape-top-right pink-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/海边2.jpg" alt="海边2" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">坏蛋小狗嘿嘿 🌅</div>
+              </div>
+
+              <div class="polaroid-card-box full-card rot-straight">
+                <div class="photo-inner">
+                  <img src="images/海边3.jpg" alt="海边3" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">麦海也算海吧？ 🌾</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 9 页：开黑打游戏 (4张照片错落) ======================= -->
+        <article class="letter-page" data-page="9">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">🎮 一起开黑打游戏……</h3>
+
+            <div class="photos-group-layout layout-4-games">
+              <div class="polaroid-card-box game-card rot-left-2">
+                <div class="washi-tape-strip tape-top-left purple-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/打游戏1.jpg" alt="打游戏1" class="zoomable-img" loading="lazy">
+                </div>
+              </div>
+
+              <div class="polaroid-card-box game-card card-drop-down-small rot-right-2">
+                <div class="washi-tape-strip tape-top-right gold-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/打游戏2.jpg" alt="打游戏2" class="zoomable-img" loading="lazy">
+                </div>
+              </div>
+
+              <div class="polaroid-card-box game-card rot-right-1">
+                <div class="photo-inner">
+                  <img src="images/打游戏3.jpg" alt="打游戏3" class="zoomable-img" loading="lazy">
+                </div>
+              </div>
+
+              <div class="polaroid-card-box game-card card-drop-down-small rot-left-1">
+                <div class="washi-tape-strip tape-top-right pink-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/打游戏4.jpg" alt="打游戏4" class="zoomable-img" loading="lazy">
+                </div>
+              </div>
+
+              <div class="game-sticker-badge handwritten-text">最强队友！💥</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 10 页：骑车兜风 (无箭头/无标签，4张原比例照片错落) ======================= -->
+        <article class="letter-page" data-page="10">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">
+              🛵 我们一起骑车兜风，从盛夏的心动到寒冬的温柔……
+            </h3>
+
+            <!-- 4张骑车照片：采用原比例相框，无箭头，无季节标签，错落自然展示 -->
+            <div class="cycle-natural-grid">
+              <div class="polaroid-card-box natural-card rot-left-2">
+                <div class="washi-tape-strip tape-top-left pink-tape"></div>
+                <div class="photo-inner natural-photo-inner">
+                  <img src="images/骑车1.jpg" alt="骑车1" class="zoomable-img natural-cycle-img" loading="lazy">
+                </div>
+              </div>
+
+              <div class="polaroid-card-box natural-card card-drop-down-small rot-right-2">
+                <div class="washi-tape-strip tape-top-right gold-tape"></div>
+                <div class="photo-inner natural-photo-inner">
+                  <img src="images/骑车2.jpg" alt="骑车2" class="zoomable-img natural-cycle-img" loading="lazy">
+                </div>
+              </div>
+
+              <div class="polaroid-card-box natural-card rot-right-1">
+                <div class="washi-tape-strip tape-top-left blue-tape"></div>
+                <div class="photo-inner natural-photo-inner">
+                  <img src="images/骑车3.png" alt="骑车3" class="zoomable-img natural-cycle-img" loading="lazy">
+                </div>
+              </div>
+
+              <div class="polaroid-card-box natural-card card-drop-down-small rot-left-1">
+                <div class="washi-tape-strip tape-top-right purple-tape"></div>
+                <div class="photo-inner natural-photo-inner">
+                  <img src="images/骑车4.jpg" alt="骑车4" class="zoomable-img natural-cycle-img" loading="lazy">
+                </div>
+              </div>
+            </div>
+
+            <p class="cycle-bottom-hint handwritten-text">“车后座的风，吹过了每一个春夏秋冬 💨”</p>
+          </div>
+        </article>
+
+        <!-- ======================= 第 11 页：吃好多好多顿饭 (12张照片流动画廊胶卷) ======================= -->
+        <article class="letter-page" data-page="11">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">
+              🍲 一起吃了好多好多顿饭……
+            </h3>
+
+            <!-- 电影放映流动胶卷效果 -->
+            <div class="film-reel-wrapper">
+              <div class="film-reel-decor-top">
+                <div class="sprocket-holes"></div>
+              </div>
+
+              <div class="film-reel-scroll-track" id="filmReelTrack">
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭1.jpg" alt="美食1" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#1 🍜</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭2.jpg" alt="美食2" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#2 🍲</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭3.jpg" alt="美食3" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#3 🥢</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭4.jpg" alt="美食4" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#4 🍱</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭5.jpg" alt="美食5" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#5 🍛</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭6.jpg" alt="美食6" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#6 🥘</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭7.jpg" alt="美食7" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#7 🍳</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭8.jpg" alt="美食8" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#8 🥩</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭9.jpg" alt="美食9" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#9 🍣</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭10.jpg" alt="美食10" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#10 🥟</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭11.jpg" alt="美食11" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#11 ☕</span></div></div>
+                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭12.jpg" alt="美食12" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#12 🍰</span></div></div>
+              </div>
+
+              <div class="film-reel-decor-bottom">
+                <div class="sprocket-holes"></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 12 页：唱歌夜晚 (两张图高度错落) ======================= -->
+        <article class="letter-page" data-page="12">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">
+              🎤 我会记得你给我唱歌的每一个夜晚……
+            </h3>
+
+            <div class="photos-group-layout layout-2-sing staggered-two">
+              <div class="polaroid-card-box rot-left-1">
+                <div class="washi-tape-strip tape-top-left purple-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/唱歌1.jpg" alt="唱歌1" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">弹吉他的宝宝真帅呀嘿嘿 🎸</div>
+              </div>
+
+              <!-- 错落向下沉 -->
+              <div class="polaroid-card-box card-drop-down-more rot-right-1">
+                <div class="washi-tape-strip tape-top-right gold-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/唱歌2.jpg" alt="唱歌2" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">申请一直听宝宝唱歌~ ✨</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 13 页：花花 (花花5使用原比例) ======================= -->
+        <article class="letter-page" data-page="13">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">
+              💐 会记得你捧到我面前的每一束花……
+            </h3>
+
+            <!-- 5张花花：前4张两两错落，第5张居中大图使用原比例 -->
+            <div class="flower-gallery-clean">
+              <div class="polaroid-card-box flower-card rot-left-1">
+                <div class="photo-inner">
+                  <img src="images/花花1.jpg" alt="花花1" class="zoomable-img" loading="lazy">
+                </div>
+              </div>
+              <div class="polaroid-card-box flower-card card-drop-down-small rot-right-1">
+                <div class="photo-inner">
+                  <img src="images/花花2.jpg" alt="花花2" class="zoomable-img" loading="lazy">
+                </div>
+              </div>
+              <div class="polaroid-card-box flower-card rot-right-2">
+                <div class="photo-inner">
+                  <img src="images/花花3.jpg" alt="花花3" class="zoomable-img" loading="lazy">
+                </div>
+              </div>
+              <div class="polaroid-card-box flower-card card-drop-down-small rot-left-2">
+                <div class="photo-inner">
+                  <img src="images/花花4.jpg" alt="花花4" class="zoomable-img" loading="lazy">
+                </div>
+              </div>
+              
+              <!-- 花花5：使用原照片比例 natural-card -->
+              <div class="polaroid-card-box flower-card full-span natural-card rot-straight">
+                <div class="washi-tape-strip tape-center pink-tape"></div>
+                <div class="photo-inner natural-photo-inner">
+                  <img src="images/花花5.jpg" alt="花花5" class="zoomable-img natural-img flower-natural-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">“每一束都开在心上” 🌸</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- ======================= 第 14 页：主动靠近 (双向奔赴星光引力互动) ======================= -->
+        <article class="letter-page" data-page="14">
+          <div class="letter-paper">
+            <h3 class="page-caption-title handwritten-text">
+              👣 会记得你向我主动靠近的每一步……
+            </h3>
+
+            <!-- 核心互动：双向奔赴星光轨迹 -->
+            <div class="mutual-approach-box">
+              <div class="orbit-meter">
+                <span class="orbit-meter-label handwritten-text">心动距离：</span>
+                <span class="orbit-distance" id="stepDistanceNum">99 步</span>
+              </div>
+
+              <!-- 两个小人相互靠近的跑道 -->
+              <div class="approach-track">
+                <div class="runner runner-boy" id="runnerBoy">
+                  <span class="runner-avatar">👦</span>
+                  <span class="runner-tag handwritten-text">你</span>
+                </div>
+
+                <div class="track-dashed-line">
+                  <div class="track-heart-sparkle" id="trackSparkle">❤️</div>
+                </div>
+
+                <div class="runner runner-girl" id="runnerGirl">
+                  <span class="runner-avatar">👧</span>
+                  <span class="runner-tag handwritten-text">我</span>
+                </div>
+              </div>
+
+              <!-- 互动点击按钮 -->
+              <button class="step-forward-btn handwritten-text" id="stepForwardBtn">
+                <span class="step-btn-icon">🐾</span> 戳一戳，朝彼此走一步
+              </button>
+            </div>
+
+            <!-- 深情手写信笺卡片 -->
+            <div class="heartfelt-letter-card">
+              <div class="card-quote-mark">“</div>
+              <p class="heartfelt-text handwritten-text">
+                世界这么大，谢谢你总是第一个走向我。<br>
+                那些穿过晚风奔向我的夜晚、每一次毫不犹豫牵紧我的手、还有无论何时都坚定选择我的目光……<br>
+                你向我迈出的每一步，都在我的星空里落下了最温柔的引力。
+              </p>
+              <div class="card-reply-hint handwritten-text">
+                ✦ 剩下的漫漫余生，换我奔向你 ✦
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+        <!-- ======================= 第 15 页：终章 · 告白、生日与陪伴 ======================= -->
+        <article class="letter-page" data-page="15">
+          <div class="letter-paper final-letter-paper">
+            
+            <div class="confession-banner">
+              <p class="confession-lead handwritten-text">最后我想说：</p>
+              <h2 class="confession-main handwritten-text">
+                你很好，特别特别好，<br>
+                我非常非常喜欢你！❤️
+              </h2>
+            </div>
+
+            <!-- 生日祝福卡片 -->
+            <div class="birthday-card">
+              <div class="cake-icon">🎂</div>
+              <h3 class="birthday-title handwritten-text">生日快乐，宝宝！</h3>
+              <p class="birthday-wishes handwritten-text">
+                继续做你想做的事情吧！<br>
+                我会一直陪着你哒~ ✨
+              </p>
+            </div>
+
+            <!-- 居中拍立得：陪伴 -->
+            <div class="polaroid-wrapper">
+              <div class="polaroid-card-box rot-straight">
+                <div class="washi-tape-strip tape-center gold-tape"></div>
+                <div class="photo-inner">
+                  <img src="images/陪伴.jpg" alt="我们的陪伴" class="zoomable-img" loading="lazy">
+                </div>
+                <div class="polaroid-note handwritten-text">陪伴是最长情的告白 ❤️</div>
+              </div>
+            </div>
+
+            <!-- 浪漫火漆印章与签名 -->
+            <div class="letter-footer-seal">
+              <div class="wax-seal">
+                <span class="wax-text">FOREVER<br>0521</span>
+              </div>
+              <div class="letter-signature">
+                <span class="sign-date">2026.05.21 - ∞</span>
+                <span class="sign-name handwritten-text">永远爱你的我 💫</span>
+              </div>
+            </div>
+
+          </div>
+        </article>
+
+      </div><!-- /.letter-pages-viewport -->
+
+      <!-- 底部翻页控制器 (Page Navigation Bar) -->
+      <footer class="letter-nav-controller">
+        <button class="nav-btn prev-btn" id="prevPageBtn" disabled>
+          <span class="btn-arrow">❮</span> 上一页
+        </button>
+
+        <div class="page-indicator-pill" id="pageIndicatorPill">
+          1 / 15
+        </div>
+
+        <button class="nav-btn next-btn" id="nextPageBtn">
+          下一页 <span class="btn-arrow">❯</span>
+        </button>
+      </footer>
+
+    </div><!-- /.letter-book -->
+
+  </main>
+
+  <!-- 图片全屏放大预览弹窗 (Photo Modal) -->
+  <div class="photo-modal" id="photoModal">
+    <div class="photo-modal-backdrop" id="photoModalBackdrop"></div>
+    <div class="photo-modal-content">
+      <img src="" alt="放大查看" id="modalBigImg">
+      <button class="modal-close" id="closePhotoModal">&times;</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

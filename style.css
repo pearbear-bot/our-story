@@ -1,0 +1,1487 @@
+/* ============================================================
+   致我的宝宝 · 星光手账回忆长信 (Scrapbook Love Letter Theme)
+   ============================================================ */
+
+:root {
+  --bg-dark: #070a14;
+  --bg-gradient: radial-gradient(ellipse at top, #141b38 0%, #080c1b 50%, #03040a 100%);
+  --accent-gold: #f6e58d;
+  --accent-star: #ffeaa7;
+  --accent-pink: #ff7675;
+  --accent-purple: #a29bfe;
+  --text-main: #f1f2f6;
+  --text-muted: #a4b0be;
+  
+  /* 信笺背景：深邃星夜羊皮纸感磨砂玻璃 */
+  --letter-bg: rgba(16, 22, 44, 0.82);
+  --letter-border: rgba(255, 234, 167, 0.22);
+  --letter-glow: 0 10px 40px rgba(0, 0, 0, 0.65);
+  --paper-radius: 22px;
+
+  /* 手写体与衬线体 */
+  --font-handwrite: 'Ma Shan Zheng', 'Long Cang', 'ZCOOL KuaiLe', 'STKaiti', 'KaiTi', cursive, serif;
+  --font-serif: 'Noto Serif SC', serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--bg-dark);
+  background-image: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 动态全屏星空画布 */
+#star-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 手写字体通用样式 */
+.handwritten-text {
+  font-family: var(--font-handwrite) !important;
+  letter-spacing: 1px;
+}
+
+/* ================= 顶部常驻微型心动栏 (Sticky Top Bar) ================= */
+.sticky-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(7, 10, 20, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 234, 167, 0.14);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.sticky-nav-inner {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mini-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 234, 167, 0.22);
+  border-radius: 20px;
+  padding: 4px 12px;
+  box-shadow: 0 0 12px rgba(255, 234, 167, 0.08);
+}
+
+.mini-heart {
+  font-size: 13px;
+  animation: heartPulse 1.8s ease-in-out infinite;
+}
+
+.mini-label {
+  font-size: 11px;
+  color: var(--accent-star);
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+}
+
+.mini-time-display {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+  font-family: 'Playfair Display', serif;
+}
+
+.mini-num {
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 234, 167, 0.5);
+  letter-spacing: 0.5px;
+}
+
+.mini-unit {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-right: 3px;
+}
+
+/* 顶部音乐播放按钮 */
+.music-player-btn {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.music-disc {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2d3436 40%, #090a0f 85%);
+  border: 1.5px solid rgba(255, 234, 167, 0.4);
+  box-shadow: 0 0 10px rgba(255, 234, 167, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.music-icon {
+  font-size: 14px;
+  filter: drop-shadow(0 0 3px #ffeaa7);
+}
+
+.music-disc.playing {
+  animation: rotateDisc 4s linear infinite;
+  border-color: var(--accent-star);
+  box-shadow: 0 0 16px rgba(255, 234, 167, 0.6);
+}
+
+@keyframes rotateDisc {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px var(--accent-pink)); }
+  50% { transform: scale(1.22); filter: drop-shadow(0 0 10px var(--accent-pink)); }
+}
+
+/* ================= 手机端主容器 ================= */
+.mobile-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 58px 12px 30px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 信件书本外壳 */
+.letter-book {
+  position: relative;
+  width: 100%;
+  background: var(--letter-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--letter-border);
+  border-radius: var(--paper-radius);
+  box-shadow: var(--letter-glow);
+  padding: 16px 14px 14px 14px;
+  transition: all 0.3s ease;
+}
+
+/* 信头邮戳装饰 */
+.letter-header-decor {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.stamp-box {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border: 1px solid rgba(255, 234, 167, 0.35);
+  border-radius: 6px;
+  background: rgba(255, 234, 167, 0.05);
+}
+
+.stamp-icon {
+  font-size: 12px;
+}
+
+.stamp-text {
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--accent-star);
+  font-family: 'Playfair Display', serif;
+}
+
+.letter-page-counter {
+  font-size: 11px;
+  color: var(--accent-purple);
+  letter-spacing: 1px;
+  font-family: 'Playfair Display', serif;
+}
+
+/* 顶部细进度条 */
+.progress-bar-container {
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  width: 6.66%;
+  height: 100%;
+  background: linear-gradient(to right, var(--accent-purple), var(--accent-pink), var(--accent-gold));
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* ================= 页面视口与动画 ================= */
+.letter-pages-viewport {
+  position: relative;
+  width: 100%;
+}
+
+.letter-page {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.letter-page.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+  animation: pageFadeIn 0.4s ease forwards;
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.letter-paper {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+/* 抬头 */
+.letter-salutation {
+  font-family: var(--font-handwrite);
+  font-size: 24px;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 2px;
+  text-shadow: 0 0 12px rgba(255, 234, 167, 0.35);
+}
+
+.letter-para {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #e4e7eb;
+}
+
+.big-handwrite {
+  font-size: 21px;
+  line-height: 1.85;
+  text-align: center;
+  padding: 10px 4px;
+}
+
+.highlight-para {
+  color: var(--accent-star);
+}
+
+.highlight-para strong {
+  color: #fff;
+  font-size: 21px;
+  padding: 0 4px;
+  border-bottom: 2px solid var(--accent-pink);
+}
+
+/* 每页的文字标题 (大号手写体) */
+.page-caption-title {
+  font-size: 21px;
+  font-weight: 600;
+  color: var(--accent-star);
+  text-align: center;
+  line-height: 1.5;
+  text-shadow: 0 0 12px rgba(255, 234, 167, 0.25);
+  margin: 4px 0 6px 0;
+}
+
+/* ================= 5月月历组件 ================= */
+.calendar-component {
+  background: rgba(10, 14, 28, 0.7);
+  border: 1px solid rgba(255, 234, 167, 0.25);
+  border-radius: 16px;
+  padding: 14px 10px;
+  box-shadow: inset 0 0 16px rgba(0, 0, 0, 0.4), 0 4px 18px rgba(0, 0, 0, 0.3);
+}
+
+.cal-header {
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.cal-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-star);
+  letter-spacing: 2px;
+  font-family: 'Playfair Display', serif;
+}
+
+.cal-sub {
+  font-size: 10.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  text-align: center;
+}
+
+.cal-weekday {
+  font-size: 11px;
+  color: var(--accent-purple);
+  font-weight: 600;
+  padding-bottom: 4px;
+}
+
+.cal-empty {
+  height: 28px;
+}
+
+.cal-day {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11.5px;
+  color: #8395a7;
+  border-radius: 6px;
+  font-family: -apple-system, sans-serif;
+}
+
+.cal-day.special-day {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 118, 117, 0.35), rgba(255, 71, 87, 0.5));
+  border: 1.5px solid var(--accent-pink);
+  box-shadow: 0 0 12px rgba(255, 118, 117, 0.6);
+  color: #fff;
+  font-weight: bold;
+  border-radius: 50%;
+  animation: specialPulse 2s infinite ease-in-out;
+}
+
+@keyframes specialPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 118, 117, 0.6);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 18px rgba(255, 118, 117, 0.9);
+  }
+}
+
+.special-day .day-num {
+  font-size: 12px;
+  z-index: 1;
+}
+
+.special-day .day-heart {
+  position: absolute;
+  top: -6px;
+  right: -5px;
+  font-size: 10px;
+}
+
+.special-day .day-tag {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8.5px;
+  white-space: nowrap;
+  color: var(--accent-star);
+  background: rgba(7, 10, 20, 0.9);
+  padding: 1px 4px;
+  border-radius: 4px;
+  border: 0.5px solid var(--accent-pink);
+}
+
+.turn-page-hint {
+  text-align: center;
+  font-size: 14px;
+  color: var(--accent-purple);
+  padding: 14px 0 4px 0;
+  animation: bounceHint 2s infinite ease-in-out;
+  cursor: pointer;
+}
+
+@keyframes bounceHint {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* ================= 温暖卡通组件 ================= */
+.cartoon-illustration {
+  width: 100%;
+  background: radial-gradient(circle at center, rgba(162, 155, 254, 0.12) 0%, rgba(10, 14, 28, 0.4) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 12px 10px 8px 10px;
+  text-align: center;
+  margin: 4px 0;
+}
+
+.couple-svg {
+  width: 100%;
+  max-height: 165px;
+  display: block;
+  margin: 0 auto;
+}
+
+.cartoon-caption {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 15px;
+  color: var(--accent-star);
+  letter-spacing: 1px;
+}
+
+.heart-flutter {
+  animation: heartFloat 2.2s ease-in-out infinite;
+}
+
+@keyframes heartFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.15); }
+}
+
+/* ================= 纯文字聚焦页 (Page 3) ================= */
+.text-focus-paper {
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 24px 10px;
+}
+
+.chapter-intro-quote {
+  font-size: 26px;
+  line-height: 1.8;
+  color: #fff;
+  text-shadow: 0 0 16px rgba(255, 234, 167, 0.4);
+  margin-bottom: 20px;
+}
+
+.galaxy-compass {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent-purple);
+  font-size: 12px;
+  letter-spacing: 3px;
+  opacity: 0.85;
+  margin-bottom: 14px;
+}
+
+.compass-line {
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--accent-purple), transparent);
+}
+
+.whisper-hint {
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+/* ================= 居中单张拍立得相框 (Page 4, 5, 6, 15) ================= */
+.polaroid-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 6px 0;
+}
+
+.polaroid-card-box {
+  position: relative;
+  background: #fdfdfd;
+  padding: 8px 8px 8px 8px;
+  border-radius: 8px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s ease;
+  width: 100%;
+  max-width: 310px;
+  margin: 0 auto;
+  align-self: start;
+  height: fit-content;
+}
+
+.polaroid-card-box:active {
+  transform: scale(0.98) !important;
+}
+
+.photo-inner {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #0d1222;
+}
+
+.photo-inner img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroid-note {
+  font-family: var(--font-handwrite);
+  font-size: 15px;
+  color: #2c3e50;
+  text-align: center;
+  margin-top: 6px;
+  margin-bottom: 2px;
+  padding: 0 2px;
+  line-height: 1.25;
+}
+
+.note-regret {
+  font-size: 13.5px;
+  color: #c0392b;
+  line-height: 1.4;
+}
+
+/* 和纸撕纸胶带 (Washi Tape) */
+.washi-tape-strip {
+  position: absolute;
+  height: 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  z-index: 5;
+  clip-path: polygon(0 0, 100% 0, 96% 100%, 4% 100%);
+  opacity: 0.85;
+}
+
+.pink-tape { background: rgba(255, 118, 117, 0.75); }
+.gold-tape { background: rgba(246, 229, 141, 0.8); }
+.purple-tape { background: rgba(162, 155, 254, 0.8); }
+.blue-tape { background: rgba(116, 185, 255, 0.8); }
+
+.tape-center {
+  width: 65px;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-1deg);
+}
+
+.tape-top-left {
+  width: 48px;
+  top: -7px;
+  left: -6px;
+  transform: rotate(-20deg);
+}
+
+.tape-top-right {
+  width: 48px;
+  top: -7px;
+  right: -6px;
+  transform: rotate(20deg);
+}
+
+/* 旋转微角度 */
+.rot-left-1 { transform: rotate(-1.5deg); }
+.rot-left-2 { transform: rotate(-2.5deg); }
+.rot-right-1 { transform: rotate(1.5deg); }
+.rot-right-2 { transform: rotate(2.5deg); }
+.rot-straight { transform: rotate(0deg); }
+
+/* ================= 规整生动的无遮挡多图排版 ================= */
+
+/* 原照片自然比例相框 (第6页 出租屋) */
+.natural-ratio-wrapper .natural-card {
+  max-width: 300px;
+}
+
+.natural-photo-inner {
+  height: auto !important;
+  background: transparent !important;
+}
+
+.natural-img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 380px !important;
+  object-fit: contain !important;
+}
+
+/* 高低错落调节工具类 */
+.card-drop-down {
+  margin-top: 24px !important;
+}
+
+.card-drop-down-more {
+  margin-top: 32px !important;
+}
+
+.card-drop-down-small {
+  margin-top: 14px !important;
+}
+
+/* 两图并排，且高度错落 (Page 8 海边 & Page 12 唱歌) */
+.photos-group-layout.layout-2,
+.photos-group-layout.layout-2-sing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: start;
+  width: 100%;
+  margin: 6px 0;
+}
+
+.photos-group-layout.layout-2 .polaroid-card-box,
+.photos-group-layout.layout-2-sing .polaroid-card-box {
+  max-width: 100%;
+}
+
+.photos-group-layout.layout-2 .photo-inner img {
+  height: 170px;
+}
+
+.photos-group-layout.layout-2-sing .photo-inner img {
+  height: 180px;
+}
+
+/* 三图排版 (Page 7 雪山 & Page 8 海边)：上排2张(带错落)，下排1张居中 */
+.photos-group-layout.layout-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: start;
+  width: 100%;
+  margin: 6px 0;
+}
+
+.photos-group-layout.layout-3 .mini-card .photo-inner img {
+  height: 135px;
+}
+
+.photos-group-layout.layout-3 .full-card {
+  grid-column: span 2;
+  max-width: 250px;
+  margin: 0 auto;
+}
+
+.photos-group-layout.layout-3 .full-card .photo-inner img {
+  height: 150px;
+}
+
+/* 四图打游戏错落排版 (Page 9) */
+.photos-group-layout.layout-4-games {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: start;
+  width: 100%;
+  margin: 6px 0;
+  position: relative;
+}
+
+.photos-group-layout.layout-4-games .game-card .photo-inner img {
+  height: 130px;
+}
+
+.game-sticker-badge {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-6deg);
+  background: linear-gradient(135deg, #ff7675, #d63031);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(214, 48, 49, 0.5);
+  z-index: 10;
+  border: 1px dashed #fff;
+  white-space: nowrap;
+}
+
+/* ================= 第 10 页：4张骑车原比例手账相框 (无箭头/无标签) ================= */
+.cycle-natural-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  align-items: start;
+  width: 100%;
+  margin: 6px 0;
+}
+
+.cycle-natural-grid .polaroid-card-box {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+.natural-cycle-img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 165px !important;
+  object-fit: contain !important;
+}
+
+.cycle-bottom-hint {
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--accent-star);
+  margin-top: 8px;
+}
+
+/* ================= 第 11 页：12张美食电影放映流动胶卷 (Film Reel) ================= */
+.film-reel-wrapper {
+  position: relative;
+  width: 100%;
+  background: #090d1c;
+  border: 2px solid rgba(255, 234, 167, 0.3);
+  border-radius: 14px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.8);
+  padding: 8px 0;
+  margin: 10px 0 6px 0;
+  overflow: hidden;
+}
+
+/* 胶卷上下打孔齿孔 (Sprocket holes) */
+.film-reel-decor-top,
+.film-reel-decor-bottom {
+  width: 100%;
+  height: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sprocket-holes {
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, #f1f2f6 30%, transparent 35%);
+  background-size: 16px 12px;
+  background-repeat: repeat-x;
+  opacity: 0.65;
+}
+
+/* 流动滚动轨道 */
+.film-reel-scroll-track {
+  display: flex;
+  gap: 12px;
+  padding: 8px 14px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.film-reel-scroll-track::-webkit-scrollbar {
+  display: none;
+}
+
+.film-frame {
+  flex: 0 0 160px;
+  background: #11162a;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: transform 0.25s ease;
+}
+
+.film-frame:active {
+  transform: scale(0.97);
+}
+
+.film-frame-inner {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  border-radius: 5px;
+  overflow: hidden;
+  background: #000;
+}
+
+.film-frame-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.film-frame-tag {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  background: rgba(7, 10, 20, 0.85);
+  color: var(--accent-star);
+  font-size: 11px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 0.5px solid rgba(255, 234, 167, 0.3);
+}
+
+/* ================= 第 13 页：五图花花优雅展示 (花花5使用原比例) ================= */
+.flower-gallery-clean {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  align-items: start;
+  width: 100%;
+  margin: 6px 0;
+}
+
+.flower-gallery-clean .flower-card .photo-inner img {
+  height: 125px;
+}
+
+.flower-gallery-clean .flower-card.full-span {
+  grid-column: span 2;
+  max-width: 260px;
+  margin: 0 auto;
+}
+
+.flower-natural-img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 270px !important;
+  object-fit: contain !important;
+}
+
+/* ================= 第 14 页：双向奔赴星光引力互动 (Page 14) ================= */
+.mutual-approach-box {
+  background: rgba(14, 19, 38, 0.75);
+  border: 1px solid rgba(255, 234, 167, 0.25);
+  border-radius: 16px;
+  padding: 14px 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 16px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.orbit-meter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.orbit-meter-label {
+  font-size: 13.5px;
+  color: var(--accent-purple);
+}
+
+.orbit-distance {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-star);
+  text-shadow: 0 0 8px rgba(255, 234, 167, 0.5);
+}
+
+/* 跑道轨道 */
+.approach-track {
+  position: relative;
+  width: 100%;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(162, 155, 254, 0.25);
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  overflow: hidden;
+}
+
+.track-dashed-line {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  right: 20px;
+  height: 2px;
+  border-top: 2px dashed rgba(255, 234, 167, 0.2);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.track-heart-sparkle {
+  font-size: 16px;
+  filter: drop-shadow(0 0 6px var(--accent-pink));
+  animation: heartPulse 1.8s infinite ease-in-out;
+}
+
+/* 跑者小人 */
+.runner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.runner-avatar {
+  font-size: 26px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5));
+}
+
+.runner-tag {
+  font-size: 10.5px;
+  color: var(--accent-star);
+  background: rgba(7, 10, 20, 0.85);
+  padding: 1px 6px;
+  border-radius: 8px;
+  border: 0.5px solid rgba(255, 234, 167, 0.3);
+  margin-top: 2px;
+}
+
+/* 互动点击按钮 */
+.step-forward-btn {
+  background: linear-gradient(135deg, rgba(255, 118, 117, 0.25), rgba(162, 155, 254, 0.25));
+  border: 1px solid rgba(255, 234, 167, 0.35);
+  border-radius: 20px;
+  padding: 9px 16px;
+  color: #fff;
+  font-size: 14.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.25s ease;
+}
+
+.step-forward-btn:active {
+  transform: scale(0.97);
+  background: linear-gradient(135deg, rgba(255, 118, 117, 0.4), rgba(162, 155, 254, 0.4));
+  border-color: var(--accent-star);
+}
+
+.step-btn-icon {
+  font-size: 15px;
+  animation: bounceFoot 1.6s infinite ease-in-out;
+}
+
+@keyframes bounceFoot {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* 深情手写信笺卡片 */
+.heartfelt-letter-card {
+  position: relative;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 234, 167, 0.03));
+  border: 1px solid rgba(255, 234, 167, 0.2);
+  border-radius: 14px;
+  padding: 16px 14px 14px 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+  margin-top: 4px;
+}
+
+.card-quote-mark {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
+  color: var(--accent-star);
+  opacity: 0.25;
+  line-height: 1;
+}
+
+.heartfelt-text {
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: #dfe4ea;
+  text-align: justify;
+  padding: 4px 2px 2px 2px;
+}
+
+.card-reply-hint {
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--accent-gold);
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  letter-spacing: 1px;
+}
+
+/* ================= 终章 (Page 15 舒适自适应) ================= */
+.final-letter-paper {
+  gap: 14px;
+  padding-bottom: 6px;
+}
+
+.confession-banner {
+  text-align: center;
+  padding: 8px 10px;
+  background: radial-gradient(circle, rgba(255, 118, 117, 0.16) 0%, transparent 80%);
+}
+
+.confession-lead {
+  font-size: 16px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.confession-main {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.5;
+  text-shadow: 0 0 16px rgba(255, 118, 117, 0.7);
+}
+
+.birthday-card {
+  text-align: center;
+  padding: 14px 12px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(255, 234, 167, 0.12), rgba(255, 118, 117, 0.08));
+  border: 1px solid rgba(255, 234, 167, 0.35);
+  box-shadow: 0 6px 20px rgba(255, 234, 167, 0.1);
+}
+
+.cake-icon {
+  font-size: 28px;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 0 8px rgba(255, 234, 167, 0.5));
+}
+
+.birthday-title {
+  font-size: 19px;
+  color: var(--accent-gold);
+  margin-bottom: 4px;
+}
+
+.birthday-wishes {
+  font-size: 16px;
+  color: #f1f2f6;
+  line-height: 1.6;
+}
+
+.final-letter-paper .polaroid-card-box .photo-inner img {
+  height: 190px;
+}
+
+.letter-footer-seal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dashed rgba(255, 255, 255, 0.15);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.wax-seal {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #e84118 60%, #c23616 100%);
+  border: 2px solid #ff7675;
+  box-shadow: 0 4px 14px rgba(232, 65, 24, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(-12deg);
+}
+
+.wax-text {
+  font-size: 8px;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.letter-signature {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sign-date {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.sign-name {
+  font-size: 17px;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+/* ================= 底部翻页控制器 (Page Navigation Bar) ================= */
+.letter-nav-controller {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 12px;
+  margin-top: 12px;
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 234, 167, 0.25);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--accent-star);
+  font-family: var(--font-handwrite);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-btn:active {
+  transform: scale(0.95);
+  background: rgba(255, 234, 167, 0.15);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  pointer-events: none;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.page-indicator-pill {
+  font-size: 12px;
+  color: var(--accent-purple);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(162, 155, 254, 0.2);
+  padding: 3px 12px;
+  border-radius: 14px;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 1px;
+}
+
+/* ================= 图片全屏放大弹窗 ================= */
+.photo-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.photo-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.photo-modal-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(4, 6, 14, 0.94);
+  backdrop-filter: blur(10px);
+}
+
+.photo-modal-content {
+  position: relative;
+  z-index: 2;
+  max-width: 96%;
+  max-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.photo-modal-content img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.modal-close {
+  position: absolute;
+  top: -36px;
+  right: 0;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 30px;
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* 点击屏幕产生的星光微粒 */
+.click-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 14px;
+  animation: particleFly 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes particleFly {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2);
+    opacity: 0;
+  }
+}
+
+/* ================= 专属心动密码锁 (Password Lock Screen) ================= */
+.lock-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 99999;
+  background: radial-gradient(circle at center, rgba(14, 19, 38, 0.97) 0%, rgba(7, 10, 20, 0.99) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.6s;
+}
+
+.lock-overlay.unlocked {
+  opacity: 0;
+  transform: scale(1.06);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.lock-card {
+  width: 100%;
+  max-width: 350px;
+  background: rgba(19, 26, 53, 0.88);
+  border: 1.5px solid rgba(255, 234, 167, 0.35);
+  border-radius: 24px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 118, 117, 0.2);
+  padding: 34px 22px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.lock-card.shake-anim {
+  animation: shakeLock 0.45s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+@keyframes shakeLock {
+  10%, 90% { transform: translate3d(-3px, 0, 0); }
+  20%, 80% { transform: translate3d(4px, 0, 0); }
+  30%, 50%, 70% { transform: translate3d(-6px, 0, 0); }
+  40%, 60% { transform: translate3d(6px, 0, 0); }
+}
+
+.lock-icon-wrap {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lock-icon {
+  font-size: 38px;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 12px rgba(255, 234, 167, 0.6));
+}
+
+.lock-glow-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 118, 117, 0.35) 0%, transparent 70%);
+  animation: pulseRing 2.4s infinite ease-in-out;
+}
+
+@keyframes pulseRing {
+  0%, 100% { transform: scale(0.9); opacity: 0.5; }
+  50% { transform: scale(1.25); opacity: 0.9; }
+}
+
+.lock-title {
+  font-size: 21px;
+  color: #fff;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  text-shadow: 0 0 12px rgba(255, 234, 167, 0.5);
+}
+
+.lock-subtitle {
+  font-size: 13.5px;
+  color: var(--accent-purple);
+  margin-bottom: 22px;
+  letter-spacing: 0.5px;
+}
+
+/* PIN 码输入组件 */
+.pin-input-container {
+  position: relative;
+  width: 220px;
+  margin: 0 auto 18px;
+  cursor: pointer;
+}
+
+.pin-hidden-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.pin-dots {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.pin-dot {
+  width: 44px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(255, 234, 167, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: var(--accent-star);
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.pin-dot.active {
+  border-color: var(--accent-star);
+  box-shadow: 0 0 12px rgba(255, 234, 167, 0.4);
+}
+
+.pin-dot.filled {
+  background: rgba(255, 118, 117, 0.2);
+  border-color: var(--accent-pink);
+  box-shadow: 0 0 14px rgba(255, 118, 117, 0.45);
+}
+
+.pin-dot.filled::after {
+  content: '❤️';
+  font-size: 16px;
+  animation: dotPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes dotPop {
+  0% { transform: scale(0); }
+  80% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.lock-feedback {
+  font-size: 13.5px;
+  color: var(--accent-gold);
+  min-height: 22px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.lock-feedback.error {
+  color: #ff7675;
+}
+
+.lock-feedback.success {
+  color: #55efc4;
+}
+
+.unlock-btn {
+  width: 100%;
+  padding: 12px 20px;
+  border-radius: 25px;
+  border: 1px solid rgba(255, 234, 167, 0.5);
+  background: linear-gradient(135deg, rgba(255, 118, 117, 0.65) 0%, rgba(162, 155, 254, 0.65) 100%);
+  color: #fff;
+  font-size: 16px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(255, 118, 117, 0.35);
+  transition: all 0.25s ease;
+}
+
+.unlock-btn:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 10px rgba(255, 118, 117, 0.5);
+}
