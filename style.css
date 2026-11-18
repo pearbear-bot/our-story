@@ -1334,14 +1334,14 @@ html, body {
   justify-content: center;
 }
 
-/* 火漆封蜡印章 */
+/* 信封中央星空印章徽章：与整体星夜暗色调完全融合 */
 .wax-seal-badge {
-  width: 58px;
-  height: 58px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: radial-gradient(circle, #e17055 10%, #d63031 75%, #b71540 100%);
-  border: 2px solid rgba(255, 234, 167, 0.6);
-  box-shadow: 0 4px 16px rgba(214, 48, 49, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.35);
+  background: radial-gradient(circle, #1b2446 0%, #10162c 70%, #0a0e1e 100%);
+  border: 1.5px solid rgba(255, 234, 167, 0.55);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55), 0 0 16px rgba(162, 155, 254, 0.25), inset 0 1px 3px rgba(255, 234, 167, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1351,9 +1351,9 @@ html, body {
 }
 
 .wax-seal-badge .lock-icon {
-  font-size: 30px;
+  font-size: 32px;
   line-height: 1;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 2px 8px rgba(255, 234, 167, 0.45));
 }
 
 .lock-glow-ring {
@@ -1363,7 +1363,7 @@ html, body {
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 118, 117, 0.35) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(162, 155, 254, 0.25) 0%, transparent 70%);
   animation: pulseRing 2.4s infinite ease-in-out;
 }
 
@@ -1385,14 +1385,6 @@ html, body {
   color: var(--accent-star);
   margin-bottom: 20px;
   letter-spacing: 0.5px;
-}
-
-.envelope-stamp-footer {
-  font-size: 11px;
-  color: rgba(255, 234, 167, 0.3);
-  letter-spacing: 2px;
-  margin-top: 14px;
-  text-align: center;
 }
 
 /* PIN 码输入组件 */
@@ -1424,8 +1416,8 @@ html, body {
   width: 44px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(255, 234, 167, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 234, 167, 0.28);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1441,13 +1433,13 @@ html, body {
 }
 
 .pin-dot.filled {
-  background: rgba(255, 118, 117, 0.2);
-  border-color: var(--accent-pink);
-  box-shadow: 0 0 14px rgba(255, 118, 117, 0.45);
+  background: rgba(162, 155, 254, 0.18);
+  border-color: var(--accent-star);
+  box-shadow: 0 0 14px rgba(255, 234, 167, 0.4);
 }
 
 .pin-dot.filled::after {
-  content: '❤️';
+  content: '✨';
   font-size: 16px;
   animation: dotPop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -1478,17 +1470,18 @@ html, body {
   width: 100%;
   padding: 12px 20px;
   border-radius: 25px;
-  border: 1px solid rgba(255, 234, 167, 0.5);
-  background: linear-gradient(135deg, rgba(255, 118, 117, 0.65) 0%, rgba(162, 155, 254, 0.65) 100%);
+  border: 1px solid rgba(255, 234, 167, 0.4);
+  background: linear-gradient(135deg, rgba(162, 155, 254, 0.35) 0%, rgba(108, 92, 231, 0.35) 50%, rgba(255, 234, 167, 0.22) 100%);
   color: #fff;
   font-size: 16px;
   letter-spacing: 1px;
   cursor: pointer;
-  box-shadow: 0 6px 20px rgba(255, 118, 117, 0.35);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 14px rgba(162, 155, 254, 0.2);
   transition: all 0.25s ease;
 }
 
 .unlock-btn:active {
   transform: scale(0.97);
-  box-shadow: 0 2px 10px rgba(255, 118, 117, 0.5);
+  background: linear-gradient(135deg, rgba(162, 155, 254, 0.5) 0%, rgba(108, 92, 231, 0.5) 50%, rgba(255, 234, 167, 0.3) 100%);
+  box-shadow: 0 2px 10px rgba(162, 155, 254, 0.35);
 }
