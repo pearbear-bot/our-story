@@ -5,3 +5,5 @@ our-story.zip
 *_backup.flac
 *.bak
 *.bat
+*.py
+*二维码*.png
