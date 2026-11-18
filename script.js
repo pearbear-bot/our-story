@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       if (lockFeedback) {
         lockFeedback.className = 'lock-feedback handwritten-text error';
-        lockFeedback.textContent = '密码不太对哦，再悄悄回忆一下~ 💭';
+        lockFeedback.textContent = '密码不太对哦，再猜猜看~ 💭';
       }
 
       pinInput.value = '';
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updatePinDots(val);
       if (lockFeedback) {
         lockFeedback.className = 'lock-feedback handwritten-text';
-        lockFeedback.textContent = '💡 提示：我们在一起的那个重要日子 🌸';
+        lockFeedback.textContent = '';
       }
 
       if (val.length === 4) {
@@ -263,11 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function handleSwipe() {
-    // 胶卷滚动轨道内滑动优先用于查看美食，不触发换页
-    if (touchStartTarget && touchStartTarget.closest('.film-reel-scroll-track')) {
-      return;
-    }
-
     const diffX = touchEndX - touchStartX;
     const diffY = touchEndY - touchStartY;
     
@@ -282,34 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
-
-  /* ------------------------------------------------------------
-     2.1 美食胶卷自动流动放映动画 (Film Reel Auto Float - 提升流动速度)
-     ------------------------------------------------------------ */
-  const filmTrack = document.getElementById('filmReelTrack');
-  let filmScrollDirection = 1;
-  let isTouchingFilm = false;
-
-  if (filmTrack) {
-    filmTrack.addEventListener('touchstart', () => { isTouchingFilm = true; }, { passive: true });
-    filmTrack.addEventListener('touchend', () => { setTimeout(() => { isTouchingFilm = false; }, 1200); }, { passive: true });
-    filmTrack.addEventListener('mouseenter', () => { isTouchingFilm = true; });
-    filmTrack.addEventListener('mouseleave', () => { isTouchingFilm = false; });
-  }
-
-  function runFilmAnimation() {
-    if (!isTouchingFilm && currentPage === 11 && filmTrack) {
-      if (filmTrack.scrollLeft >= filmTrack.scrollWidth - filmTrack.clientWidth - 2) {
-        filmScrollDirection = -1;
-      } else if (filmTrack.scrollLeft <= 2) {
-        filmScrollDirection = 1;
-      }
-      filmTrack.scrollLeft += 4.2 * filmScrollDirection;
-    }
-    requestAnimationFrame(runFilmAnimation);
-  }
-  requestAnimationFrame(runFilmAnimation);
-
 
   /* ------------------------------------------------------------
      3. 图片点击全屏大图预览 (Photo Modal)

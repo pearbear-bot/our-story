@@ -11,15 +11,24 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- ======================= 专属心动密码锁 (Password Lock Screen) ======================= -->
+  <!-- ======================= 专属心动密码锁：信封样式 (Envelope Lock Screen) ======================= -->
   <div id="passwordLockOverlay" class="lock-overlay">
-    <div class="lock-card" id="lockCard">
-      <div class="lock-icon-wrap">
-        <span class="lock-icon" id="lockIcon">🔒</span>
+    <div class="lock-card envelope-card" id="lockCard">
+      <!-- 信封三角封盖与折角效果 -->
+      <div class="envelope-top-flap">
+        <div class="envelope-flap-triangle"></div>
+      </div>
+
+      <!-- 火漆信封印章图标 -->
+      <div class="lock-icon-wrap envelope-seal-wrap">
+        <div class="wax-seal-badge">
+          <span class="lock-icon" id="lockIcon">💌</span>
+        </div>
         <div class="lock-glow-ring"></div>
       </div>
-      <h2 class="lock-title handwritten-text">✨ 开启专属星空之旅</h2>
-      <p class="lock-subtitle handwritten-text">输入属于我们的心动纪念密码 (4位数字)</p>
+
+      <h2 class="lock-title handwritten-text">✉️ 你有一封信件待查收~</h2>
+      <p class="lock-subtitle handwritten-text">请输入密码！</p>
 
       <div class="pin-input-container" id="pinInputContainer">
         <input type="password" id="pinInput" class="pin-hidden-input" maxlength="4" inputmode="numeric" pattern="[0-9]*" autofocus autocomplete="off">
@@ -31,13 +40,16 @@
         </div>
       </div>
 
-      <div class="lock-feedback handwritten-text" id="lockFeedback">
-        💡 提示：我们在一起的那个重要日子 🌸
-      </div>
+      <div class="lock-feedback handwritten-text" id="lockFeedback"></div>
 
       <button type="button" class="unlock-btn handwritten-text" id="unlockBtn">
-        <span>✨ 解锁甜蜜回忆</span>
+        <span>✨ 点击解锁</span>
       </button>
+
+      <!-- 信封底部心动纪念微印 -->
+      <div class="envelope-stamp-footer handwritten-text">
+        ✦ FOR MY LOVE · 0521 ✦
+      </div>
     </div>
   </div>
 
@@ -397,7 +409,7 @@
         <article class="letter-page" data-page="10">
           <div class="letter-paper">
             <h3 class="page-caption-title handwritten-text">
-              🛵 我们一起骑车兜风，从盛夏的心动到寒冬的温柔……
+              🛵 一起骑车兜风，从盛夏的心动到寒冬的温柔……
             </h3>
 
             <!-- 4张骑车照片：采用原比例相框，无箭头，无季节标签，错落自然展示 -->
@@ -435,38 +447,78 @@
           </div>
         </article>
 
-        <!-- ======================= 第 11 页：吃好多好多顿饭 (12张照片流动画廊胶卷) ======================= -->
+        <!-- ======================= 第 11 页：吃好多好多顿饭 (12张照片手账拼贴风) ======================= -->
         <article class="letter-page" data-page="11">
           <div class="letter-paper">
             <h3 class="page-caption-title handwritten-text">
               🍲 一起吃了好多好多顿饭……
             </h3>
 
-            <!-- 电影放映流动胶卷效果 -->
-            <div class="film-reel-wrapper">
-              <div class="film-reel-decor-top">
-                <div class="sprocket-holes"></div>
+            <!-- 12张美食拍立得手账直接拼贴风 -->
+            <div class="food-scrapbook-collage">
+              <div class="food-collage-card rot-left-2">
+                <div class="washi-tape-strip tape-top-left pink-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭1.jpg" alt="美食1" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#1 🍜</div>
               </div>
-
-              <div class="film-reel-scroll-track" id="filmReelTrack">
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭1.jpg" alt="美食1" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#1 🍜</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭2.jpg" alt="美食2" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#2 🍲</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭3.jpg" alt="美食3" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#3 🥢</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭4.jpg" alt="美食4" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#4 🍱</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭5.jpg" alt="美食5" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#5 🍛</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭6.jpg" alt="美食6" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#6 🥘</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭7.jpg" alt="美食7" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#7 🍳</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭8.jpg" alt="美食8" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#8 🥩</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭9.jpg" alt="美食9" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#9 🍣</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭10.jpg" alt="美食10" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#10 🥟</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭11.jpg" alt="美食11" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#11 ☕</span></div></div>
-                <div class="film-frame"><div class="film-frame-inner"><img src="images/吃饭12.jpg" alt="美食12" class="zoomable-img" loading="lazy"><span class="film-frame-tag handwritten-text">#12 🍰</span></div></div>
+              <div class="food-collage-card rot-right-1 card-drop-down-mini">
+                <div class="washi-tape-strip tape-top-right gold-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭2.jpg" alt="美食2" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#2 🍲</div>
               </div>
-
-              <div class="film-reel-decor-bottom">
-                <div class="sprocket-holes"></div>
+              <div class="food-collage-card rot-left-1">
+                <div class="washi-tape-strip tape-top-left blue-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭3.jpg" alt="美食3" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#3 🥢</div>
+              </div>
+              <div class="food-collage-card rot-right-2 card-drop-down-mini">
+                <div class="washi-tape-strip tape-top-right purple-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭4.jpg" alt="美食4" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#4 🍱</div>
+              </div>
+              <div class="food-collage-card rot-left-2">
+                <div class="washi-tape-strip tape-top-left gold-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭5.jpg" alt="美食5" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#5 🍛</div>
+              </div>
+              <div class="food-collage-card rot-right-1 card-drop-down-mini">
+                <div class="washi-tape-strip tape-top-right pink-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭6.jpg" alt="美食6" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#6 🥘</div>
+              </div>
+              <div class="food-collage-card rot-left-1">
+                <div class="washi-tape-strip tape-top-left purple-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭7.jpg" alt="美食7" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#7 🍳</div>
+              </div>
+              <div class="food-collage-card rot-right-2 card-drop-down-mini">
+                <div class="washi-tape-strip tape-top-right blue-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭8.jpg" alt="美食8" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#8 🥩</div>
+              </div>
+              <div class="food-collage-card rot-left-2">
+                <div class="washi-tape-strip tape-top-left pink-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭9.jpg" alt="美食9" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#9 🍣</div>
+              </div>
+              <div class="food-collage-card rot-right-1 card-drop-down-mini">
+                <div class="washi-tape-strip tape-top-right gold-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭10.jpg" alt="美食10" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#10 🥟</div>
+              </div>
+              <div class="food-collage-card rot-left-1">
+                <div class="washi-tape-strip tape-top-left blue-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭11.jpg" alt="美食11" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#11 ☕</div>
+              </div>
+              <div class="food-collage-card rot-right-2 card-drop-down-mini">
+                <div class="washi-tape-strip tape-top-right purple-tape"></div>
+                <div class="photo-inner"><img src="images/吃饭12.jpg" alt="美食12" class="zoomable-img" loading="lazy"></div>
+                <div class="food-tag handwritten-text">#12 🍰</div>
               </div>
             </div>
+
+            <p class="cycle-bottom-hint handwritten-text">“吃过很多顿饭，最好吃的永远是和你一起吃的那一顿 🥢”</p>
           </div>
         </article>
 
@@ -580,14 +632,15 @@
             <!-- 深情手写信笺卡片 -->
             <div class="heartfelt-letter-card">
               <div class="card-quote-mark">“</div>
-              <p class="heartfelt-text handwritten-text">
-                世界这么大，谢谢你总是第一个走向我。<br>
-                那些穿过晚风奔向我的夜晚、每一次毫不犹豫牵紧我的手、还有无论何时都坚定选择我的目光……<br>
-                你向我迈出的每一步，都在我的星空里落下了最温柔的引力。
+              <p class="heartfelt-para handwritten-text">
+                我喜欢记录，不知道从什么时候起，我的相册里从全是我自己，慢慢变成了一大半都关于你，我才意识到，你早已在我生命中是不可或缺的存在了。
               </p>
-              <div class="card-reply-hint handwritten-text">
-                ✦ 剩下的漫漫余生，换我奔向你 ✦
-              </div>
+              <p class="heartfelt-para handwritten-text">
+                那天你问我，如果我不是北大博士了，你还会喜欢我吗，我不记得我回答了什么，但应该是没回答太好，我回去仔细地思考了一下这个问题，学历能代表着什么？——一个很厉害的初印象、比较强的学习力、或许称得上聪明的脑袋？那么然后呢？在我眼中的一个人最重要的人格魅力、精神特质、为人处世却远不能从一纸毕业证书上读取。我想要的其实一直只是一个善良的、温柔的、值得信任的人生伴侣。
+              </p>
+              <p class="heartfelt-para handwritten-text">
+                我想，对于你的问题，我有了答案：学历只是你最不起眼的光环之一，是直观的、外在的，也是浅显的、片面的，因为褪去这层光环来看，你内在远比一张学历证书耀眼的多，在秩序的维度之外，你的不被世俗评价体系束缚着的部分——你的有趣、你的真诚、你的才华、你看待世界的角度等等，才是更迷人的，也才更应该被看到。所以，一直做你自己想做的事情吧，我一直支持你，永远！
+              </p>
             </div>
 
           </div>

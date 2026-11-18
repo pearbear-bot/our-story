@@ -771,92 +771,56 @@ html, body {
   margin-top: 8px;
 }
 
-/* ================= 第 11 页：12张美食电影放映流动胶卷 (Film Reel) ================= */
-.film-reel-wrapper {
+/* ================= 第 11 页：12张美食拍立得手账直接拼贴风 ================= */
+.food-scrapbook-collage {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px 7px;
+  width: 100%;
+  margin: 6px 0;
+  padding: 4px 2px;
+}
+
+.food-collage-card {
   position: relative;
-  width: 100%;
-  background: #090d1c;
-  border: 2px solid rgba(255, 234, 167, 0.3);
-  border-radius: 14px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.8);
-  padding: 8px 0;
-  margin: 10px 0 6px 0;
-  overflow: hidden;
-}
-
-/* 胶卷上下打孔齿孔 (Sprocket holes) */
-.film-reel-decor-top,
-.film-reel-decor-bottom {
-  width: 100%;
-  height: 12px;
-  position: relative;
-  overflow: hidden;
-}
-
-.sprocket-holes {
-  width: 100%;
-  height: 100%;
-  background-image: radial-gradient(circle, #f1f2f6 30%, transparent 35%);
-  background-size: 16px 12px;
-  background-repeat: repeat-x;
-  opacity: 0.65;
-}
-
-/* 流动滚动轨道 */
-.film-reel-scroll-track {
-  display: flex;
-  gap: 12px;
-  padding: 8px 14px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-
-.film-reel-scroll-track::-webkit-scrollbar {
-  display: none;
-}
-
-.film-frame {
-  flex: 0 0 160px;
-  background: #11162a;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  padding: 6px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  background: #ffffff;
+  padding: 5px 5px 6px 5px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
   transition: transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
 }
 
-.film-frame:active {
-  transform: scale(0.97);
+.food-collage-card:active {
+  transform: scale(0.96) !important;
 }
 
-.film-frame-inner {
-  position: relative;
+.food-collage-card .photo-inner {
   width: 100%;
-  height: 140px;
-  border-radius: 5px;
   overflow: hidden;
-  background: #000;
+  border-radius: 3px;
+  background: #0d1222;
 }
 
-.film-frame-inner img {
+.food-collage-card .photo-inner img {
   width: 100%;
-  height: 100%;
+  height: 82px;
   object-fit: cover;
   display: block;
 }
 
-.film-frame-tag {
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
-  background: rgba(7, 10, 20, 0.85);
-  color: var(--accent-star);
-  font-size: 11px;
-  padding: 1px 6px;
-  border-radius: 4px;
-  border: 0.5px solid rgba(255, 234, 167, 0.3);
+.food-tag {
+  font-family: var(--font-handwrite);
+  font-size: 11.5px;
+  color: #2d3436;
+  text-align: center;
+  margin-top: 4px;
+  line-height: 1.1;
+}
+
+.card-drop-down-mini {
+  margin-top: 6px;
 }
 
 /* ================= 第 13 页：五图花花优雅展示 (花花5使用原比例) ================= */
@@ -1034,22 +998,19 @@ html, body {
   line-height: 1;
 }
 
-.heartfelt-text {
-  font-size: 15.5px;
+.heartfelt-para {
+  font-family: var(--font-handwrite);
+  font-size: 15px;
   line-height: 1.85;
   color: #dfe4ea;
   text-align: justify;
-  padding: 4px 2px 2px 2px;
+  margin-bottom: 12px;
+  text-indent: 2em;
+  letter-spacing: 0.5px;
 }
 
-.card-reply-hint {
-  text-align: center;
-  font-size: 13.5px;
-  color: var(--accent-gold);
-  margin-top: 10px;
-  padding-top: 8px;
-  border-top: 1px dashed rgba(255, 255, 255, 0.12);
-  letter-spacing: 1px;
+.heartfelt-para:last-child {
+  margin-bottom: 0;
 }
 
 /* ================= 终章 (Page 15 舒适自适应) ================= */
@@ -1315,17 +1276,41 @@ html, body {
   pointer-events: none;
 }
 
-.lock-card {
+.lock-card.envelope-card {
   width: 100%;
   max-width: 350px;
-  background: rgba(19, 26, 53, 0.88);
-  border: 1.5px solid rgba(255, 234, 167, 0.35);
-  border-radius: 24px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 35px rgba(255, 118, 117, 0.2);
-  padding: 34px 22px;
+  background: rgba(10, 14, 30, 0.94);
+  border: 1.5px solid rgba(255, 234, 167, 0.3);
+  border-radius: 20px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 35px rgba(255, 118, 117, 0.15);
+  padding: 30px 22px 22px 22px;
   text-align: center;
   position: relative;
   overflow: hidden;
+}
+
+/* 信封顶部三角翻盖折痕效果 */
+.envelope-top-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.envelope-flap-triangle {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 175px solid transparent;
+  border-right: 175px solid transparent;
+  border-top: 52px solid rgba(255, 234, 167, 0.08);
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.45));
 }
 
 .lock-card.shake-anim {
@@ -1339,22 +1324,36 @@ html, body {
   40%, 60% { transform: translate3d(6px, 0, 0); }
 }
 
-.lock-icon-wrap {
+.lock-icon-wrap.envelope-seal-wrap {
   position: relative;
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 16px;
+  width: 68px;
+  height: 68px;
+  margin: 4px auto 14px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.lock-icon {
-  font-size: 38px;
+/* 火漆封蜡印章 */
+.wax-seal-badge {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #e17055 10%, #d63031 75%, #b71540 100%);
+  border: 2px solid rgba(255, 234, 167, 0.6);
+  box-shadow: 0 4px 16px rgba(214, 48, 49, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   z-index: 2;
   transition: transform 0.3s ease;
-  filter: drop-shadow(0 0 12px rgba(255, 234, 167, 0.6));
+}
+
+.wax-seal-badge .lock-icon {
+  font-size: 30px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .lock-glow-ring {
@@ -1382,10 +1381,18 @@ html, body {
 }
 
 .lock-subtitle {
-  font-size: 13.5px;
-  color: var(--accent-purple);
-  margin-bottom: 22px;
+  font-size: 14.5px;
+  color: var(--accent-star);
+  margin-bottom: 20px;
   letter-spacing: 0.5px;
+}
+
+.envelope-stamp-footer {
+  font-size: 11px;
+  color: rgba(255, 234, 167, 0.3);
+  letter-spacing: 2px;
+  margin-top: 14px;
+  text-align: center;
 }
 
 /* PIN 码输入组件 */
