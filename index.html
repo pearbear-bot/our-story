@@ -3,11 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>致我的宝宝 · 我们的星光回忆长信</title>
+  <title>致我的宝宝</title>
   <meta name="description" content="时间过得好快，转眼已经和你在一起了6个月">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Long+Cang&family=Ma+Shan+Zheng&family=ZCOOL+KuaiLe&family=Noto+Serif+SC:wght@300;400;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <!-- 字体全部本地化：不再依赖 Google Fonts（国内不可达，会卡住整页渲染） -->
+  <link rel="preload" href="assets/fonts/STXingkai-subset.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -75,10 +74,9 @@
     </div>
   </header>
 
-  <!-- 专属浪漫背景音乐：周杰伦-星晴 -->
-  <audio id="bgmAudio" loop preload="auto">
-    <source src="周杰伦-星晴.flac" type="audio/flac">
-    <source src="周杰伦-星晴.flac" type="audio/x-flac">
+  <!-- 专属浪漫背景音乐：周杰伦-星晴（已转成 AAC，4MB，手机加载快） -->
+  <audio id="bgmAudio" loop preload="none">
+    <source src="周杰伦-星晴.m4a" type="audio/mp4">
   </audio>
 
   <!-- 主容器 (手机最佳视口) -->
@@ -426,7 +424,7 @@
               <div class="polaroid-card-box natural-card rot-right-1">
                 <div class="washi-tape-strip tape-top-left blue-tape"></div>
                 <div class="photo-inner natural-photo-inner">
-                  <img src="images/骑车3.png" alt="骑车3" class="zoomable-img natural-cycle-img" loading="lazy">
+                  <img src="images/骑车3.jpg" alt="骑车3" class="zoomable-img natural-cycle-img" loading="lazy">
                 </div>
               </div>
 

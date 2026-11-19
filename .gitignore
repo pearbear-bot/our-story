@@ -1,9 +1,22 @@
+# 只把「部署网站需要的文件」放进仓库，其余都是本地工具/个人文件
+*.py
+*.bat
+vendor/
+原图备份/
+手机版.zip
 our-story.zip
-文案.docx
 *.zip
 .gemini
 *_backup.flac
 *.bak
-*.bat
-*.py
-*二维码*.png
+debug.log
+文案.docx
+手机使用说明.txt
+二维码*.png
+永久二维码*.png
+恋爱纪念二维码.png
+纯净二维码.png
+扫描我_局域网二维码.png
+周杰伦-星晴.flac
+assets/fonts/STXingkai.ttf
+__pycache__/

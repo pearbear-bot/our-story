@@ -2,6 +2,15 @@
    致我的宝宝 · 星光手账回忆长信 (Scrapbook Love Letter Theme)
    ============================================================ */
 
+/* 手写体：本地华文行楷（已按本页用字裁剪到 293KB），随网页一起给手机 */
+@font-face {
+  font-family: 'CoupleXingkai';
+  src: url('assets/fonts/STXingkai-subset.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --bg-dark: #070a14;
   --bg-gradient: radial-gradient(ellipse at top, #141b38 0%, #080c1b 50%, #03040a 100%);
@@ -19,8 +28,8 @@
   --paper-radius: 22px;
 
   /* 手写体与衬线体 */
-  --font-handwrite: 'Ma Shan Zheng', 'Long Cang', 'ZCOOL KuaiLe', 'STKaiti', 'KaiTi', cursive, serif;
-  --font-serif: 'Noto Serif SC', serif;
+  --font-handwrite: 'CoupleXingkai', 'Ma Shan Zheng', 'Long Cang', 'ZCOOL KuaiLe', 'STKaiti', 'KaiTi', cursive, serif;
+  --font-serif: 'Noto Serif SC', 'CoupleXingkai', 'STKaiti', 'KaiTi', serif;
 }
 
 * {
