@@ -29,8 +29,14 @@
       <h2 class="lock-title handwritten-text">✉️ 你有一封信件待查收~</h2>
       <p class="lock-subtitle handwritten-text">请输入密码！</p>
 
+      <!-- 预加载进度：照片全部缓存好之后才允许解锁 -->
+      <div class="preload-wrap" id="preloadWrap">
+        <div class="preload-track"><div class="preload-fill" id="preloadFill"></div></div>
+        <div class="preload-text handwritten-text" id="preloadText">正在准备我们的照片…</div>
+      </div>
+
       <div class="pin-input-container" id="pinInputContainer">
-        <input type="password" id="pinInput" class="pin-hidden-input" maxlength="4" inputmode="numeric" pattern="[0-9]*" autofocus autocomplete="off">
+        <input type="password" id="pinInput" class="pin-hidden-input" maxlength="4" inputmode="numeric" pattern="[0-9]*" autocomplete="off" disabled>
         <div class="pin-dots" id="pinDots">
           <span class="pin-dot" data-index="0"></span>
           <span class="pin-dot" data-index="1"></span>
@@ -41,7 +47,7 @@
 
       <div class="lock-feedback handwritten-text" id="lockFeedback"></div>
 
-      <button type="button" class="unlock-btn handwritten-text" id="unlockBtn">
+      <button type="button" class="unlock-btn handwritten-text is-waiting" id="unlockBtn" disabled>
         <span>✨ 点击解锁</span>
       </button>
     </div>

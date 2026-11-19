@@ -1499,3 +1499,43 @@ html, body {
   background: linear-gradient(135deg, rgba(162, 155, 254, 0.5) 0%, rgba(108, 92, 231, 0.5) 50%, rgba(255, 234, 167, 0.3) 100%);
   box-shadow: 0 2px 10px rgba(162, 155, 254, 0.35);
 }
+
+/* ============================================================
+   图片预加载进度（密码锁屏）
+   ============================================================ */
+.preload-wrap {
+  width: 100%;
+  max-width: 230px;
+  margin: 20px auto 4px;
+}
+
+.preload-track {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+}
+
+.preload-fill {
+  width: 0%;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #ff7675 0%, #ffeaa7 100%);
+  box-shadow: 0 0 12px rgba(255, 234, 167, 0.55);
+  transition: width 0.25s ease;
+}
+
+.preload-text {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #a4b0be;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.unlock-btn:disabled,
+.unlock-btn.is-waiting {
+  opacity: 0.45;
+  cursor: default;
+  filter: grayscale(0.35);
+}

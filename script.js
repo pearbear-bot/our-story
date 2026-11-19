@@ -123,6 +123,110 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ------------------------------------------------------------
+     0.5 照片预加载：全部进缓存后才允许输入密码解锁
+     用 fetch 填充 HTTP 缓存，不保留解码后的位图，
+     否则 38 张 1400px 的图解码后接近 190MB，低端机会被系统杀掉。
+     ------------------------------------------------------------ */
+  (function preloadPhotos() {
+    const wrap = document.getElementById('preloadWrap');
+    const fill = document.getElementById('preloadFill');
+    const label = document.getElementById('preloadText');
+
+    let finished = false;
+
+    function paint() {
+      const pct = total ? Math.round((done / total) * 100) : 100;
+      if (fill) fill.style.width = pct + '%';
+      if (label) {
+        label.textContent = done >= total
+          ? '马上就好…'
+          : '正在准备我们的照片… ' + done + ' / ' + total;
+      }
+    }
+
+    function unlockNow() {
+      if (finished) return;
+      finished = true;
+      if (fill) fill.style.width = '100%';
+      if (label) label.textContent = '准备好了 ✨';
+      setTimeout(() => {
+        if (wrap) wrap.style.display = 'none';
+        if (pinInput) {
+          pinInput.disabled = false;
+          try { pinInput.focus(); } catch (e) {}
+        }
+        if (unlockBtn) {
+          unlockBtn.disabled = false;
+          unlockBtn.classList.remove('is-waiting');
+        }
+      }, 450);
+    }
+
+    // 图片下完后再悄悄把背景音乐也拉进缓存，别和照片抢带宽
+    function warmAudio() {
+      const audio = document.getElementById('bgmAudio');
+      const source = audio && audio.querySelector('source');
+      const url = source && source.getAttribute('src');
+      if (!url) return;
+      fetch(url).then(r => r.blob()).catch(() => {});
+    }
+
+    if (!wrap || !fill || typeof fetch !== 'function') {
+      unlockNow();
+      return;
+    }
+
+    const urls = [];
+    document.querySelectorAll('img[src]').forEach(img => {
+      const src = img.getAttribute('src');
+      if (src && src.trim() && urls.indexOf(src) === -1) urls.push(src);
+    });
+
+    const total = urls.length;
+    let done = 0;
+
+    if (!total) {
+      unlockNow();
+      return;
+    }
+
+    paint();
+
+    // 兜底：无论如何 90 秒后放行，避免网络异常时永远锁死
+    setTimeout(unlockNow, 90000);
+
+    const queue = urls.slice();
+
+    async function worker() {
+      while (queue.length > 0 && !finished) {
+        const url = queue.shift();
+        try {
+          const res = await fetch(url, { cache: 'force-cache' });
+          if (!res.ok) throw new Error('http ' + res.status);
+          await res.blob();
+        } catch (err) {
+          // 失败再试一次，仍然失败就跳过，不能因为一张图把整页锁死
+          try {
+            const res2 = await fetch(url, { cache: 'reload' });
+            await res2.blob();
+          } catch (err2) { /* 忽略 */ }
+        }
+        done++;
+        paint();
+      }
+    }
+
+    Promise.all(
+      Array.from({ length: Math.min(5, total) }, worker)
+    ).then(() => {
+      unlockNow();
+      warmAudio();
+    }).catch(() => {
+      unlockNow();
+    });
+  })();
+
+  /* ------------------------------------------------------------
      1. 核心置顶心动计时器 (相守起始日: 2026-05-21 00:00:00)
      ------------------------------------------------------------ */
   const START_DATE = new Date('2026-05-21T00:00:00');
